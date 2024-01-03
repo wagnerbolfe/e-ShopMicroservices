@@ -41,7 +41,7 @@ namespace Ordering.Application.Features.Orders.Commands.CheckoutOrder
             var email = new Email() 
             { 
                 To = "wagnerbolfe@gmail.com", 
-                Body = $"Order was created.", 
+                Body = $"Order {order.Id} for {order.FirstName} {order.LastName} was created.", 
                 Subject = "Order was created" 
             };
 

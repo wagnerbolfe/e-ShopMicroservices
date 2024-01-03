@@ -10,15 +10,10 @@ namespace Ordering.API.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class OrderController : ControllerBase
+    public class OrderController(IMediator mediator) : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-        public OrderController(IMediator mediator)
-        {
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        }
-        
         [HttpGet("{userName}", Name = "GetOrder")]
         [ProducesResponseType(typeof(IEnumerable<OrdersVM>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<OrdersVM>>> GetOrdersByUserName(string userName)
@@ -28,7 +23,7 @@ namespace Ordering.API.Controllers
             return Ok(orders);
         }
 
-        // testing purpose
+        //it's not used. Order is created by rabbitmq event consumer
         [HttpPost(Name = "CheckoutOrder")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> CheckoutOrder([FromBody] CheckoutOrderCommand command)
