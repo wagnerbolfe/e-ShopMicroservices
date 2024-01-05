@@ -63,7 +63,18 @@ services:
     build:
       context: .
       dockerfile: ApiGateways/Shopping.Aggregator/Dockerfile
-
+      
+  shopping.client:
+    image: ${DOCKER_REGISTRY-}shoppingclient
+    build:
+      context: .
+      dockerfile: WebApps/Shopping.Client/Dockerfile
+      
+  identity:
+    image: ${DOCKER_REGISTRY-}identity
+    build:
+      context: .
+      dockerfile: Identity/IdentityServer/Dockerfile
 volumes: 
   mongo_data:
   portainer_data:

@@ -4,13 +4,18 @@ using Basket.API.Repositories;
 using Basket.API.Services;
 using EventBus.Messages.Events;
 using MassTransit;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Net;
+using System.Text;
 
 namespace Basket.API.Controllers
 {
-    [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize]
+    [Route("api/v1/[controller]")]
     public class BasketController(IBasketRepository repository, DiscountGrpcServices discountGrpcServices, 
         IPublishEndpoint publishEndpoint, IMapper mapper) : ControllerBase
     {
@@ -77,5 +82,7 @@ namespace Basket.API.Controllers
 
             return Accepted();
         }
+
+        
     }
 }
